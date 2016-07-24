@@ -1,6 +1,6 @@
 {
-    "name": "ezrouter/ezrouter",
-    "description": "Fucking Fast Router",
+    "name": "rest/router",
+    "description": "Fucking Fast Rest Router",
     "license": "MIT",
     "keywords": ["router"],
     "version": "1.0.0",

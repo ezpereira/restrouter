@@ -1,11 +1,13 @@
 <?php
 
-namespace ezrouter;
+namespace Rest;
 
 interface Routes
 {
 	public function get();
 	public function post();
+	public function put();
+	public function delete();
 	public function error();
 }
 
@@ -55,13 +57,26 @@ class Router
 	private function getTokens()
 	{
 		return array(
-            	':s' => '([a-zA-Z]+)',
-                ':string' => '([a-zA-Z]+)',
-                ':n' => '([0-9]+)',
-                ':number' => '([0-9]+)',
-                ':a'  => '([a-zA-Z0-9-_]+)',
-                ':alpha'  => '([a-zA-Z0-9-_]+)'
-            );
+        	':var' => '?([a-zA-Z0-9-_]+)?',
+        	':s' => '?([a-zA-Z]+)?',
+            ':string' => '?([a-zA-Z]+)?',
+            ':n' => '?([0-9]+)?',
+            ':number' => '?([0-9]+)?',
+            ':a'  => '?([a-zA-Z0-9-_]+)?'
+        );
+	}
+
+	private function call($callback, $params)
+	{
+		if(is_callable($callback)) {
+        	call_user_func_array($callback, $params);
+	    } elseif (isset($callback[0]) && is_callable($callback[0])) {
+	      	call_user_func_array($callback[0], $params);
+	    } elseif (is_string($callback)) {
+	    	$callback();
+	    } else {
+	    	$this->r->error()['404']();
+	    }
 	}
 
 	private function matchRoutes($path, $routes)
@@ -79,16 +94,9 @@ class Router
                 break;
             }
         }
+       
         unset($params[0]);
-        if(!$callback) {
-        	$this->r->error()['404']();
-        }
-
-        if(is_callable($callback) && $params) {
-        	call_user_func_array($callback, $params);
-	    } elseif (isset($callback[0]) && is_callable($callback[0])) {
-	      	call_user_func_array($callback[0], $params);
-	    }
+        $this->call($callback, $params);
 	}
 
 	public function run(Routes $routes)
@@ -98,12 +106,6 @@ class Router
 		$path    = $this->getPath();
 
 		$routes  = $this->r->{$method}();
-		$route   = array_key_exists($path, $routes) ? $routes[$path] : null;
-
-		if ($route) {
-            return $route;
-        } elseif ($routes) {
-            $this->matchRoutes($path, $routes);
-        }
+		$this->matchRoutes($path, $routes);
 	}
 }
