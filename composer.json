@@ -10,7 +10,7 @@
             "email": "ezequiel.prog@gmail.com"
         }
     ],
-    "require": {},
+    "minimum-stability": "dev",
     "autoload": {
       "classmap": ["Router.php"]
     }
