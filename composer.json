@@ -1,0 +1,16 @@
+{
+    "name": "ezrouter/router",
+    "description": "Fucking Fast Router",
+    "license": "MIT",
+    "keywords": ["router"],
+    "authors": [
+        {
+            "name": "Ezequiel Pereira",
+            "email": "ezequiel.prog@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "classmap": ["Router.php"]
+    }
+}
