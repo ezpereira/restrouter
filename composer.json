@@ -3,6 +3,7 @@
     "description": "Fucking Fast Router",
     "license": "MIT",
     "keywords": ["router"],
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Ezequiel Pereira",

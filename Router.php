@@ -9,25 +9,6 @@ interface Routes
 	public function error();
 }
 
-function d($var, $label = null, $print = true, $exit = false)
-{ 
-    print "<pre>\n";
-    print ($label) ? $label . ":\n" : '';
-    var_dump($var);
-    print "</pre>\n";
-
-}
-
-function cbTest($callback)
-{
-	d(is_string($callback), 'callback 0 is string');
-    d(is_array($callback), 'is array');
-    d(is_closure($callback), 'is closure');
-    d(is_callable($callback), 'callback 0 is callable');
-
-    d($callback);    
-}
-
 class Router
 {
 	protected $r;
@@ -63,7 +44,7 @@ class Router
         $path_orig = $this->getOrigPathInfo();
 
         if (!empty($path_info)) {
-            $path = $path_info ;
+            $path = $path_info;
         } elseif (!empty($path_orig) && $path_orig !== '/index.php') {
             $path = $path_orig;
         }
@@ -108,9 +89,6 @@ class Router
 	    } elseif (isset($callback[0]) && is_callable($callback[0])) {
 	      	call_user_func_array($callback[0], $params);
 	    }
-
-        //d($callback, 'callback');
-        //d($params, 'params');
 	}
 
 	public function run(Routes $routes)
@@ -121,10 +99,6 @@ class Router
 
 		$routes  = $this->r->{$method}();
 		$route   = array_key_exists($path, $routes) ? $routes[$path] : null;
-
-		//d($path, 'PATH');
-		//d($route, 'ROUTE');
-		//d($routes, 'ROUTES');
 
 		if ($route) {
             return $route;
