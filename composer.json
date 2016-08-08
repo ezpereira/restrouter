@@ -19,6 +19,9 @@
       "squizlabs/php_codesniffer": "1.4.8"
     },
     "autoload": {
-      "classmap": ["Router.php"]
+      "classmap": [
+        "Router.php",
+        "Routes.php"
+      ]
     }
 }
